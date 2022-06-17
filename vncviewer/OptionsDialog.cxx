@@ -70,7 +70,7 @@ OptionsDialog::OptionsDialog()
 
   // Odd dimensions to get rid of extra borders
   Fl_Notebook *notebook = new Fl_Notebook(-1, -1, w()+2,
-                                          h()+1 - INNER_MARGIN - BUTTON_HEIGHT - OUTER_MARGIN);
+                                          h()+1 - OUTER_MARGIN - BUTTON_HEIGHT - OUTER_MARGIN);
   {
     int tx, ty, tw, th;
 
