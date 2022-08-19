@@ -158,12 +158,14 @@ StringParameter display("display",
 StringParameter menuKey("MenuKey", "The key which brings up the popup menu",
                         "F8");
 
+
 BoolParameter fullscreenSystemKeys("FullscreenSystemKeys",
                                    "Pass special keys (like Alt+Tab) directly "
                                    "to the server when in full-screen mode.",
                                    true);
 
 #ifndef WIN32
+BoolParameter useSSH("UseSSH", "Create SSH tunnel", false);
 StringParameter via("via", "Gateway to tunnel via", "");
 #endif
 
@@ -207,6 +209,8 @@ static VoidParameter* parameterArray[] = {
   &setPrimary,
 #endif
   &menuKey,
+  &useSSH,
+  &via,
   &fullscreenSystemKeys
 };
 

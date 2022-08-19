@@ -60,7 +60,7 @@ std::map<OptionsCallback*, void*> OptionsDialog::callbacks;
 static std::set<OptionsDialog *> instances;
 
 OptionsDialog::OptionsDialog()
-  : Fl_Window(450, 460, _("VNC Viewer: Connection Options"))
+  : Fl_Window(450, 550, _("VNC Viewer: Connection Options"))
 {
   int x, y;
   Fl_Button *button;
@@ -297,6 +297,11 @@ void OptionsDialog::loadOptions(void)
 #endif
 #endif
 
+  /* SSH Host (-via) */
+  viaHostCheckbox->value(useSSH);
+  viaHostInput->value(via);
+  handleViaHost(viaHostCheckbox, this);
+
   /* Input */
   const char *menuKeyBuf;
 
@@ -430,6 +435,10 @@ void OptionsDialog::storeOptions(void)
 #endif
   SecurityClient::secTypes.setParam(security.ToString());
 #endif
+
+  /* SSH Host (-via) */
+  useSSH.setParam(viaHostCheckbox->value());
+  via.setParam(viaHostInput->value());
 
   /* Input */
   viewOnly.setParam(viewOnlyCheckbox->value());
@@ -771,6 +780,38 @@ void OptionsDialog::createSecurityPage(int tx, int ty, int tw, int th)
   tx = orig_tx;
   ty += INNER_MARGIN;
 
+    /* Connection */
+  ty += GROUP_LABEL_OFFSET;
+  height = GROUP_MARGIN * 2 + TIGHT_MARGIN * 1 + CHECK_HEIGHT * 1 + (INPUT_LABEL_OFFSET + INPUT_HEIGHT) * 1;
+  connectionGroup = new Fl_Group(tx, ty, width, height, _("Connection"));
+  connectionGroup->box(FL_ENGRAVED_BOX);
+  connectionGroup->align(FL_ALIGN_LEFT | FL_ALIGN_TOP);
+
+  {
+    tx += GROUP_MARGIN;
+    ty += GROUP_MARGIN;
+
+
+    viaHostCheckbox = new Fl_Check_Button(LBLRIGHT(tx, ty,
+                                                   CHECK_MIN_WIDTH,
+                                                   CHECK_HEIGHT,
+                                                   _("Create SSH tunnel (-via)")));
+    viaHostCheckbox->callback(handleViaHost, this);
+    ty += CHECK_HEIGHT + TIGHT_MARGIN;
+
+    ty += INPUT_LABEL_OFFSET;
+    viaHostInput = new Fl_Input(tx + INDENT, ty,
+                           width - GROUP_MARGIN*2 - INDENT, INPUT_HEIGHT,
+                           _("SSH Host"));
+    viaHostInput->align(FL_ALIGN_LEFT | FL_ALIGN_TOP);
+    ty += INPUT_HEIGHT + TIGHT_MARGIN;
+
+  }
+
+  ty += GROUP_MARGIN - TIGHT_MARGIN;
+
+  encryptionGroup->end();
+
   group->end();
 #endif
 }
@@ -1075,6 +1116,17 @@ void OptionsDialog::handleX509(Fl_Widget *widget, void *data)
   } else {
     dialog->caInput->deactivate();
     dialog->crlInput->deactivate();
+  }
+}
+
+void OptionsDialog::handleViaHost(Fl_Widget *widget, void *data)
+{
+  OptionsDialog *dialog = (OptionsDialog*)data;
+
+  if (dialog->viaHostCheckbox->value()) {
+    dialog->viaHostInput->activate();
+  } else {
+    dialog->viaHostInput->deactivate();
   }
 }
 
