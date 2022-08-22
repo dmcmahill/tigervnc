@@ -810,7 +810,7 @@ void OptionsDialog::createSecurityPage(int tx, int ty, int tw, int th)
 
   ty += GROUP_MARGIN - TIGHT_MARGIN;
 
-  encryptionGroup->end();
+  connectionGroup->end();
 
   group->end();
 #endif
