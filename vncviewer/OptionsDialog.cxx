@@ -298,9 +298,11 @@ void OptionsDialog::loadOptions(void)
 #endif
 
   /* SSH Host (-via) */
+#ifndef WIN32
   viaHostCheckbox->value(useSSH);
   viaHostInput->value(via);
   handleViaHost(viaHostCheckbox, this);
+#endif
 
   /* Input */
   const char *menuKeyBuf;
@@ -437,8 +439,10 @@ void OptionsDialog::storeOptions(void)
 #endif
 
   /* SSH Host (-via) */
+#ifndef WIN32
   useSSH.setParam(viaHostCheckbox->value());
   via.setParam(viaHostInput->value());
+#endif
 
   /* Input */
   viewOnly.setParam(viewOnlyCheckbox->value());
@@ -780,6 +784,9 @@ void OptionsDialog::createSecurityPage(int tx, int ty, int tw, int th)
   tx = orig_tx;
   ty += INNER_MARGIN;
 
+#endif // HAVE_GNUTLS
+
+#ifndef WIN32
     /* Connection */
   ty += GROUP_LABEL_OFFSET;
   height = GROUP_MARGIN * 2 + TIGHT_MARGIN * 1 + CHECK_HEIGHT * 1 + (INPUT_LABEL_OFFSET + INPUT_HEIGHT) * 1;
@@ -813,7 +820,7 @@ void OptionsDialog::createSecurityPage(int tx, int ty, int tw, int th)
   connectionGroup->end();
 
   group->end();
-#endif
+#endif // !WIN32
 }
 
 

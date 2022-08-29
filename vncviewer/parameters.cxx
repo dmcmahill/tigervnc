@@ -209,8 +209,10 @@ static VoidParameter* parameterArray[] = {
   &setPrimary,
 #endif
   &menuKey,
+#ifndef WIN32
   &useSSH,
   &via,
+#endif
   &fullscreenSystemKeys
 };
 
