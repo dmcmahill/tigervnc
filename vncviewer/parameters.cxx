@@ -165,8 +165,7 @@ BoolParameter fullscreenSystemKeys("FullscreenSystemKeys",
                                    true);
 
 #ifndef WIN32
-BoolParameter useSSH("UseSSH", "Create SSH tunnel", false);
-StringParameter via("via", "Gateway to tunnel via", "");
+StringParameter via("via", "SSH host for tunnel", "");
 #endif
 
 static const char* IDENTIFIER_STRING = "TigerVNC Configuration file Version 1.0";
@@ -210,7 +209,6 @@ static VoidParameter* parameterArray[] = {
 #endif
   &menuKey,
 #ifndef WIN32
-  &useSSH,
   &via,
 #endif
   &fullscreenSystemKeys

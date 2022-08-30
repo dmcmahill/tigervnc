@@ -113,7 +113,6 @@ protected:
   Fl_Check_Button *authPlainCheckbox;
 
   Fl_Group *connectionGroup;
-  Fl_Check_Button *viaHostCheckbox;
   Fl_Input *viaHostInput;
 
   /* Input */

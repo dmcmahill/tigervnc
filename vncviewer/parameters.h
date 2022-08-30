@@ -77,7 +77,6 @@ extern rfb::BoolParameter alertOnFatalError;
 extern rfb::BoolParameter reconnectOnError;
 
 #ifndef WIN32
-extern rfb::BoolParameter useSSH;
 extern rfb::StringParameter via;
 #endif
 
