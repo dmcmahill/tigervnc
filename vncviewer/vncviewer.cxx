@@ -829,8 +829,24 @@ int main(int argc, char** argv)
     }
 
 #ifndef WIN32
-    if (strlen (via.getValueStr()) > 0 && mktunnel() != 0)
-      usage(argv[0]);
+    {
+      char *tmps;
+      bool useSSH = false;
+
+      /*
+       * only establish an SSH tunnel if the via parameter is not
+       * a blank string (empty or only whitespace)
+       */
+      tmps = via.getValueStr();
+      for( int i=0; i < strlen(tmps) ; i++) {
+        if (! isspace(tmps[i]) ) {
+          useSSH = true;
+        }
+      }
+      if (useSSH && mktunnel() != 0)
+        usage(argv[0]);
+      strFree(tmps);
+    }
 #endif
   }
 
