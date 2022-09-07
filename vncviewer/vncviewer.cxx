@@ -852,7 +852,7 @@ int main(int argc, char** argv)
        * a blank string (empty or only whitespace)
        */
       tmps = via.getValueStr();
-      for( int i=0; i < strlen(tmps) ; i++) {
+      for( size_t i=0; i < strlen(tmps) ; i++) {
         if (! isspace(tmps[i]) ) {
           useSSH = true;
         }
